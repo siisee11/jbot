@@ -3,8 +3,8 @@ from typing import Optional
 from fastapi import HTTPException
 from supabase_py_async import AsyncClient
 
-from src.crud.base import CRUDBase
-from src.schemas import User, UserCreate, UserUpdate
+from crud.base import CRUDBase
+from schemas import User, UserCreate, UserUpdate
 
 
 class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):

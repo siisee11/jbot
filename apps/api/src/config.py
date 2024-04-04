@@ -20,7 +20,6 @@ class Settings(BaseSettings):
     PROJECT_DESCRIPTION: str = "A simple FastAPI app"
     DB_URL: str = os.getenv("DB_URL")
     DB_API_KEY: str = os.getenv("DB_API_KEY")
-    DB_EMAIL: str = os.getenv("DB_EMAIL")
     DB_PASSWORD: str = os.getenv("DB_PASSWORD")
     model_config = SettingsConfigDict(env_file=".env")
     API_VERSION: str = "/api/v1"

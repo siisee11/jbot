@@ -1,3 +1,11 @@
+### VS code interpreter setting
+
+cmd + p > interpreter
+
+`apps/api/.venv/bin/python`
+
+### Generate Requirements.txt
+
 Generate requirements.txt using Poetry package manager:
 
 ```
