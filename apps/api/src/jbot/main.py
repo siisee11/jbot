@@ -3,7 +3,7 @@ import argparse
 import sys
 from typing import Type
 
-from opendevin import config
+from jbot import config
 from opendevin.agent import Agent
 from opendevin.controller import AgentController
 from opendevin.llm.llm import LLM
