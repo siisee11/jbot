@@ -48,7 +48,10 @@ async def get_litellm_agents():
     """
     Get all agents supported by LiteLLM.
     """
-    return Agent.listAgents()
+    try:
+        return Agent.listAgents()
+    except ValueError:
+        return "No agent class registered."
 
 
 @app.get("/default-model")
