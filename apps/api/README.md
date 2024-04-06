@@ -1,3 +1,11 @@
+## How to run
+
+- refers to Makefile
+
+### run
+
+`$ poetry run nohup uvicorn opendevin.server.listen:app --port $(BACKEND_PORT) > logs/backend_$(shell date +'%Y%m%d\_%H%M%S').log 2>&1 &`
+
 ### VS code interpreter setting
 
 cmd + p > interpreter

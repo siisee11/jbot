@@ -55,18 +55,20 @@ INVALID_INPUT_MESSAGE = (
     "If you already completed the task, please exit the shell by generating: <execute> exit </execute>."
 )
 
+
 def parse_response(response) -> str:
     action = response.choices[0].message.content
     if "<execute>" in action and "</execute>" not in action:
         action += "</execute>"
     return action
 
+
 class CodeActAgent(Agent):
     """
-    The Code Act Agent is a minimalist agent. 
+    The Code Act Agent is a minimalist agent.
     The agent works by passing the model a list of action-observaiton pairs and prompting the model to take the next step.
     """
-    
+
     def __init__(
         self,
         llm: LLM,
@@ -82,7 +84,7 @@ class CodeActAgent(Agent):
 
     def step(self, state: State) -> Action:
         """
-        Performs one step using the Code Act Agent. 
+        Performs one step using the Code Act Agent.
         This includes gathering info on previous steps and prompting the model to make a command to execute.
 
         Parameters:
