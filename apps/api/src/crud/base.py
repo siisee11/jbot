@@ -2,7 +2,7 @@ from typing import Generic, Optional, TypeVar
 
 from supabase_py_async import AsyncClient
 
-from src.schemas.base import CreateBase, ResponseBase, UpdateBase
+from schemas.base import CreateBase, ResponseBase, UpdateBase
 
 ModelType = TypeVar("ModelType", bound=ResponseBase)
 CreateSchemaType = TypeVar("CreateSchemaType", bound=CreateBase)

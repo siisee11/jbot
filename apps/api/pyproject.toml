@@ -2,7 +2,7 @@
 name = "api"
 version = "0.1.0"
 description = ""
-authors = ["cording12 <joncording12@gmail.com>"]
+authors = ["jay <siisee111@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
@@ -12,6 +12,18 @@ email-validator = "^2.1.0"
 pydantic-settings = "^2.2.1"
 python-dotenv = "^1.0.1"
 supabase-py-async = "^2.5.5"
+datasets = "*"
+pandas = "*"
+litellm = "*"
+google-generativeai = "*"    # To use litellm with Gemini Pro API
+termcolor = "*"
+seaborn = "*"
+docker = "*"
+toml = "*"
+types-toml = "*"
+numpy = "*"
+json-repair = "*"
+playwright = "*"
 
 [tool.poetry.dev-dependencies]
 isort = "^5.10.1"
@@ -19,6 +31,27 @@ black = "^22.6.0"
 pytest = "^8.0.1"
 pylint-pydantic = "^0.3.2"
 
+
+[tool.poetry.group.llama-index.dependencies]
+llama-index = "*"
+llama-index-vector-stores-chroma = "*"
+chromadb = "*"
+llama-index-embeddings-huggingface = "*"
+llama-index-embeddings-azure-openai = "*"
+llama-index-embeddings-ollama = "*"
+pymupdfb = "*"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "*"
+mypy = "*"
+pre-commit = "*"
+
+[tool.poetry.group.test.dependencies]
+pytest = "*"
+
+[tool.poetry.group.evaluation.dependencies]
+torch = "*"
+
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
