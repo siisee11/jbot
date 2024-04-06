@@ -2,6 +2,7 @@ import json
 import uuid
 from pathlib import Path
 
+from jbot.linear.linear import Linear
 import litellm
 from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -70,3 +71,10 @@ def select_file(file: str):
     with open(Path(Path(str(config.get("WORKSPACE_DIR"))), file), "r") as selected_file:
         content = selected_file.read()
     return json.dumps({"code": content})
+
+
+@app.get("/linear/issues")
+def get_linear_issues():
+    linear = Linear()
+    issues = linear.get_issues()
+    return json.dumps(issues)
