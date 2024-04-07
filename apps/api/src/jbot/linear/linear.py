@@ -51,21 +51,35 @@ class Linear:
         data = self._query(query)
         return data
 
-    def get_my_issues(self, first: int = 10):
+    def get_my_todo_issues(self, first: int = 1):
         query = """
-        query User($userId: String!, $first: Int) {
+        query User($userId: String!, $first: Int, $filter: IssueFilter) {
             user(id: $userId) {
-                assignedIssues(first: $first) {
+                assignedIssues(first: $first, filter: $filter) {
                     nodes {
                         id
                         title
                         description
+                        identifier
+                        labels {
+                            nodes {
+                                name
+                            }
+                        }
+                        state {
+                            name
+                            type
+                        }
                     }
                 }
             }
         }
         """
-        variables = {"userId": self.me["id"], "first": first}
+        variables = {
+            "userId": self.me["id"],
+            "first": first,
+            "filter": {"state": {"type": {"eq": "unstarted"}}},
+        }
         data = self._query(query, variables)
         return data
 

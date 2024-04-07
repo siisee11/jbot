@@ -16,7 +16,7 @@ def get_me():
 
 @router.get("/me/issues")
 def get_my_issues():
-    return linear.get_my_issues()
+    return linear.get_my_todo_issues()
 
 
 @router.get("/teams")
