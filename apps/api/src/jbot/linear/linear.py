@@ -1,3 +1,4 @@
+from typing import Union
 from jbot import config
 import requests
 
@@ -13,14 +14,19 @@ class Linear:
             "Content-Type": "application/json",
             "Authorization": self.apikey,
         }
-        print("self.headers : ", self.headers)
 
-    def get_issues(self):
-        query = """
-        { issues { nodes { id title } } }
-        """
+    def _query(self, query: str) -> Union[str, dict]:
         response = requests.post(
             url=self.url, json={"query": query}, headers=self.headers
         )
         if response.status_code == 200:
             return response.json()
+
+        return response.content
+
+    def get_issues(self):
+        query = """
+        { issues { nodes { id title } } }
+        """
+        data = self._query(query)
+        return data
