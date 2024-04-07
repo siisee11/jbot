@@ -14,7 +14,13 @@ class Linear:
         }
         teams_data = self.get_teams()
         teams = teams_data["data"]["teams"]["nodes"]
-        team = next(filter(lambda t: t["name"] == "Wordbricks", teams), None)
+        team = next(
+            filter(
+                lambda t: t["name"] == config.get_or_default("LINEAR_WORKSPACE_NAME"),
+                teams,
+            ),
+            None,
+        )
         self.team = team
 
         me_data = self.get_me()

@@ -9,6 +9,7 @@ DEFAULT_CONFIG = {
     "OPENAI_API_KEY": None,
     "LLM_BASE_URL": None,
     "LINEAR_API_KEY": None,
+    "LINEAR_WORKSPACE_NAME": "Wordbricks",
     "WORKSPACE_DIR": os.path.join(os.getcwd(), "workspace"),
     "LLM_MODEL": "gpt-4-0125-preview",
     "SANDBOX_CONTAINER_IMAGE": "ghcr.io/opendevin/sandbox",
