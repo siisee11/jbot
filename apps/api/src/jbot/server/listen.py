@@ -3,7 +3,7 @@ from pathlib import Path
 
 from jbot.routers.linear import router as linear_router
 from jbot.routers.github import router as github_router
-import litellm
+from jbot.routers.llm import router as llm_router
 from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -21,30 +21,7 @@ app.add_middleware(
 
 app.include_router(linear_router)
 app.include_router(github_router)
-
-
-@app.get("/litellm-models")
-async def get_litellm_models():
-    """
-    Get all models supported by LiteLLM.
-    """
-    return list(set(litellm.model_list + list(litellm.model_cost.keys())))
-
-
-@app.get("/litellm-agents")
-async def get_litellm_agents():
-    """
-    Get all agents supported by LiteLLM.
-    """
-    try:
-        return Agent.listAgents()
-    except ValueError:
-        return "No agent class registered."
-
-
-@app.get("/default-model")
-def read_default_model():
-    return config.get_or_error("LLM_MODEL")
+app.include_router(llm_router)
 
 
 @app.get("/refresh-files")
