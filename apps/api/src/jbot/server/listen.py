@@ -3,6 +3,7 @@ import uuid
 from pathlib import Path
 
 from jbot.linear.linear import Linear
+from jbot.routers.linear import router as linear_router
 import litellm
 from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -20,20 +21,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-security_scheme = HTTPBearer()
-
-# This endpoint receives events from the client (i.e. the browser)
-# @app.websocket("/ws")
-# async def websocket_endpoint(websocket: WebSocket):
-#     await websocket.accept()
-#     sid = get_sid_from_token(websocket.query_params.get("token") or "")
-#     if sid == "":
-#         return
-#     session_manager.add_session(sid, websocket)
-#     # TODO: actually the agent_manager is created for each websocket connection, even if the session id is the same,
-#     # we need to manage the agent in memory for reconnecting the same session id to the same agent
-#     agent_manager = AgentManager(sid)
-#     await session_manager.loop_recv(sid, agent_manager.dispatch)
+app.include_router(linear_router)
 
 
 @app.get("/litellm-models")
@@ -71,10 +59,3 @@ def select_file(file: str):
     with open(Path(Path(str(config.get("WORKSPACE_DIR"))), file), "r") as selected_file:
         content = selected_file.read()
     return json.dumps({"code": content})
-
-
-@app.get("/linear/issues")
-def get_linear_issues():
-    linear = Linear()
-    issues = linear.get_issues()
-    return json.dumps(issues)
