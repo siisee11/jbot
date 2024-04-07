@@ -11,12 +11,14 @@ class MyGithub:
     github: Github
 
     def __init__(self):
-        app_id = config.get_or_error("GITHUB_APP_ID")
-        private_key = config.get_or_error("GITHUB_PRIVATE_KEY")
-        installation_id = config.get_or_error("GITHUB_INSTALLATION_ID")
-        auth = Auth.AppAuth(app_id, private_key).get_installation_auth(
-            int(installation_id)
-        )
+        pat = config.get_or_error("GITHUB_PERSONAL_ACCESS_TOKEN")
+        # app_id = config.get_or_error("GITHUB_APP_ID")
+        # private_key = config.get_or_error("GITHUB_PRIVATE_KEY")
+        # installation_id = config.get_or_error("GITHUB_INSTALLATION_ID")
+        # auth = Auth.AppAuth(app_id, private_key).get_installation_auth(
+        #     int(installation_id)
+        # )
+        auth = Auth.Token(pat)
         self.github = Github(auth=auth)
         self.repo = self.github.get_repo(config.get("GITHUB_REPO"))
         print(self.repo.name)

@@ -10,6 +10,7 @@ DEFAULT_CONFIG = {
     "LLM_BASE_URL": None,
     "LINEAR_API_KEY": None,
     "LINEAR_WORKSPACE_NAME": "Wordbricks",
+    "GITHUB_PERSONAL_ACCESS_TOKEN": None,
     "GITHUB_APP_ID": None,
     "GITHUB_PRIVATE_KEY": None,
     "GITHUB_INSTALLATION_ID": None,
