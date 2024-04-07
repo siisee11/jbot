@@ -5,7 +5,7 @@ description = ""
 authors = ["jay <siisee111@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "3.9.12"
+python = "^3.11"
 fastapi = "^0.109.2"
 uvicorn = "^0.27.1"
 email-validator = "^2.1.0"
@@ -14,7 +14,7 @@ python-dotenv = "^1.0.1"
 datasets = "*"
 pandas = "*"
 litellm = "*"
-google-generativeai = "*"                # To use litellm with Gemini Pro API
+google-generativeai = "*"                      # To use litellm with Gemini Pro API
 termcolor = "*"
 seaborn = "*"
 docker = "*"
