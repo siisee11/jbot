@@ -24,6 +24,7 @@ types-toml = "*"
 numpy = "*"
 json-repair = "*"
 playwright = "*"
+pygithub = "^2.3.0"
 
 [tool.poetry.dev-dependencies]
 isort = "^5.10.1"

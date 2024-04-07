@@ -1,13 +1,11 @@
 import json
-import uuid
 from pathlib import Path
 
-from jbot.linear.linear import Linear
 from jbot.routers.linear import router as linear_router
+from jbot.routers.github import router as github_router
 import litellm
 from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.security import HTTPBearer
 
 from jbot import config, files
 from opendevin.agent import Agent
@@ -22,6 +20,7 @@ app.add_middleware(
 )
 
 app.include_router(linear_router)
+app.include_router(github_router)
 
 
 @app.get("/litellm-models")
