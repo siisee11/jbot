@@ -5,17 +5,16 @@ description = ""
 authors = ["jay <siisee111@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "3.9.12"
 fastapi = "^0.109.2"
 uvicorn = "^0.27.1"
 email-validator = "^2.1.0"
 pydantic-settings = "^2.2.1"
 python-dotenv = "^1.0.1"
-supabase-py-async = "^2.5.5"
 datasets = "*"
 pandas = "*"
 litellm = "*"
-google-generativeai = "*"    # To use litellm with Gemini Pro API
+google-generativeai = "*"                # To use litellm with Gemini Pro API
 termcolor = "*"
 seaborn = "*"
 docker = "*"
@@ -25,6 +24,11 @@ numpy = "*"
 json-repair = "*"
 playwright = "*"
 pygithub = "^2.3.0"
+llama-index = "^0.10.27"
+llama-index-readers-github = "^0.1.7"
+llama-index-embeddings-openai = "^0.1.7"
+arize-phoenix = "^3.19.4"
+llama-index-callbacks-arize-phoenix = "^0.1.4"
 
 [tool.poetry.dev-dependencies]
 isort = "^5.10.1"
