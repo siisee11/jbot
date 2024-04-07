@@ -98,7 +98,7 @@ class MonologueAgent(Agent):
 
     def _add_event(self, event: dict):
         """
-        Adds a new event to the agent's monologue and memory. 
+        Adds a new event to the agent's monologue and memory.
         Monologue automatically condenses when it gets too large.
 
         Parameters:
@@ -107,8 +107,14 @@ class MonologueAgent(Agent):
 
         if "extras" in event and "screenshot" in event["extras"]:
             del event["extras"]["screenshot"]
-        if 'args' in event and 'output' in event['args'] and len(event['args']['output']) > MAX_OUTPUT_LENGTH:
-            event['args']['output'] = event['args']['output'][:MAX_OUTPUT_LENGTH] + "..."
+        if (
+            "args" in event
+            and "output" in event["args"]
+            and len(event["args"]["output"]) > MAX_OUTPUT_LENGTH
+        ):
+            event["args"]["output"] = (
+                event["args"]["output"][:MAX_OUTPUT_LENGTH] + "..."
+            )
 
         self.monologue.add_event(event)
         self.memory.add_event(event)
@@ -121,7 +127,7 @@ class MonologueAgent(Agent):
         Short circuted to return when already initialized.
 
         Parameters:
-        - task (str): The initial goal statement provided by the user 
+        - task (str): The initial goal statement provided by the user
 
         Raises:
         - ValueError: If task is not provided
@@ -141,13 +147,17 @@ class MonologueAgent(Agent):
             if output_type != "":
                 observation: Observation = NullObservation(content="")
                 if output_type == "run":
-                    observation = CmdOutputObservation(content=thought, command_id=0, command="")
+                    observation = CmdOutputObservation(
+                        content=thought, command_id=0, command=""
+                    )
                 elif output_type == "read":
                     observation = FileReadObservation(content=thought, path="")
                 elif output_type == "recall":
                     observation = AgentRecallObservation(content=thought, memories=[])
                 elif output_type == "browse":
-                    observation = BrowserOutputObservation(content=thought, url="", screenshot="")
+                    observation = BrowserOutputObservation(
+                        content=thought, url="", screenshot=""
+                    )
                 self._add_event(observation.to_dict())
                 output_type = ""
             else:
@@ -175,6 +185,7 @@ class MonologueAgent(Agent):
                     output_type = "browse"
                 else:
                     action = AgentThinkAction(thought=thought)
+
                 self._add_event(action.to_dict())
         self._initialized = True
 
@@ -200,9 +211,11 @@ class MonologueAgent(Agent):
             self.monologue.get_thoughts(),
             state.background_commands_obs,
         )
-        messages = [{"content": prompt,"role": "user"}]
+        print(f"Prompt: {prompt}")
+        messages = [{"content": prompt, "role": "user"}]
         resp = self.llm.completion(messages=messages)
-        action_resp = resp['choices'][0]['message']['content']
+        action_resp = resp["choices"][0]["message"]["content"]
+        print(f"Action Response: {action_resp}")
         action = prompts.parse_action_response(action_resp)
         self.latest_action = action
         return action
@@ -211,7 +224,7 @@ class MonologueAgent(Agent):
         """
         Uses VectorIndexRetriever to find related memories within the long term memory.
         Uses search to produce top 10 results.
-        
+
         Parameters:
         - query (str): The query that we want to find related memories for
 
@@ -219,4 +232,3 @@ class MonologueAgent(Agent):
         - List[str]: A list of top 10 text results that matched the query
         """
         return self.memory.search(query)
-
