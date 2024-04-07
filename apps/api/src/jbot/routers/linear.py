@@ -14,9 +14,9 @@ def get_me():
     return linear.get_me()
 
 
-@router.get("me/issues")
+@router.get("/me/issues")
 def get_my_issues():
-    return linear.get_issues()
+    return linear.get_my_issues()
 
 
 @router.get("/teams")

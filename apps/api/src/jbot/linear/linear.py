@@ -1,5 +1,5 @@
 import json
-from typing import Union
+from typing import Optional, Union
 from jbot import config
 import requests
 
@@ -12,21 +12,15 @@ class Linear:
             "Content-Type": "application/json",
             "Authorization": self.apikey,
         }
-        data = self.get_teams()
-        teams = data["data"]["teams"]["nodes"]
+        teams_data = self.get_teams()
+        teams = teams_data["data"]["teams"]["nodes"]
         team = next(filter(lambda t: t["name"] == "Wordbricks", teams), None)
         self.team = team
 
-    def _query(self, query: str) -> Union[str, dict]:
-        response = requests.post(
-            url=self.url, json={"query": query}, headers=self.headers
-        )
-        if response.status_code == 200:
-            return response.json()
+        me_data = self.get_me()
+        self.me = me_data["data"]["viewer"]
 
-        return response.content
-
-    def _mutate(self, query: str, variables: dict) -> Union[str, dict]:
+    def _query(self, query: str, variables: Optional[dict] = None) -> dict:
         """
         Make query response
         """
@@ -51,11 +45,22 @@ class Linear:
         data = self._query(query)
         return data
 
-    def get_issues(self):
+    def get_my_issues(self, first: int = 10):
         query = """
-        { issues { nodes { id title } } }
+        query User($userId: String!, $first: Int) {
+            user(id: $userId) {
+                assignedIssues(first: $first) {
+                    nodes {
+                        id
+                        title
+                        description
+                    }
+                }
+            }
+        }
         """
-        data = self._query(query)
+        variables = {"userId": self.me["id"], "first": first}
+        data = self._query(query, variables)
         return data
 
     def get_teams(self):
@@ -88,5 +93,5 @@ class Linear:
             }
         }
 
-        data = self._mutate(query, variables)
+        data = self._query(query, variables)
         return data
