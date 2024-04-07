@@ -1,11 +1,11 @@
 [tool.poetry]
 name = "api"
-version = "0.1.0"
+version = "0.1.1"
 description = ""
 authors = ["jay <siisee111@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "3.11.6"
 fastapi = "^0.109.2"
 uvicorn = "^0.27.1"
 email-validator = "^2.1.0"
@@ -14,7 +14,7 @@ python-dotenv = "^1.0.1"
 datasets = "*"
 pandas = "*"
 litellm = "*"
-google-generativeai = "*"                      # To use litellm with Gemini Pro API
+google-generativeai = "*"    # To use litellm with Gemini Pro API
 termcolor = "*"
 seaborn = "*"
 docker = "*"
@@ -24,11 +24,6 @@ numpy = "*"
 json-repair = "*"
 playwright = "*"
 pygithub = "^2.3.0"
-llama-index = "^0.10.27"
-llama-index-readers-github = "^0.1.7"
-llama-index-embeddings-openai = "^0.1.7"
-arize-phoenix = "^3.19.4"
-llama-index-callbacks-arize-phoenix = "^0.1.4"
 
 [tool.poetry.dev-dependencies]
 isort = "^5.10.1"
@@ -36,9 +31,12 @@ black = "^22.6.0"
 pytest = "^8.0.1"
 pylint-pydantic = "^0.3.2"
 
-
 [tool.poetry.group.llama-index.dependencies]
-llama-index = "*"
+llama-index = "^0.10.27"
+llama-index-readers-github = "^0.1.7"
+llama-index-embeddings-openai = "^0.1.7"
+arize-phoenix = "^3.19.4"
+llama-index-callbacks-arize-phoenix = "^0.1.4"
 llama-index-vector-stores-chroma = "*"
 chromadb = "*"
 llama-index-embeddings-huggingface = "*"
