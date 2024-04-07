@@ -16,7 +16,7 @@ class Linear:
         teams = teams_data["data"]["teams"]["nodes"]
         team = next(
             filter(
-                lambda t: t["name"] == config.get_or_default("LINEAR_WORKSPACE_NAME"),
+                lambda t: t["name"] == config.get("LINEAR_WORKSPACE_NAME"),
                 teams,
             ),
             None,
