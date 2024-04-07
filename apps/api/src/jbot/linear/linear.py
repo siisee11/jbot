@@ -70,6 +70,9 @@ class Linear:
                             name
                             type
                         }
+                        project {
+                            name
+                        }
                     }
                 }
             }
