@@ -17,6 +17,11 @@ RED=\033[0;31m
 BLUE=\033[0;34m
 RESET=\033[0m
 
+pull-docker-image:
+	@echo "$(YELLOW)Pulling Docker image...$(RESET)"
+	@docker pull $(DOCKER_IMAGE)
+	@echo "$(GREEN)Docker image pulled successfully.$(RESET)"
+
 # Build
 build:
 	@echo "$(GREEN)Building project...$(RESET)"
