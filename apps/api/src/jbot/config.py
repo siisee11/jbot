@@ -7,6 +7,7 @@ load_dotenv()
 
 DEFAULT_CONFIG = {
     "OPENAI_API_KEY": None,
+    "LLM_API_KEY": None,
     "LLM_BASE_URL": None,
     "LINEAR_API_KEY": None,
     "LINEAR_WORKSPACE_NAME": "Wordbricks",
