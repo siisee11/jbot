@@ -6,12 +6,13 @@ from typing import Type
 from jbot import config
 from opendevin.agent import Agent
 
-import agenthub  # noqa F401 (we import this to get the agents registered)
+# import agenthub  # noqa F401 (we import this to get the agents registered)
 
 # from opendevin.controller import AgentController
 from opendevin.llm.llm import LLM
 from opendevin.plan import Plan
 from opendevin.state import State
+from src.jbot.linear.linear import Linear
 
 
 def read_task_from_file(file_path: str) -> str:
@@ -68,18 +69,23 @@ async def main():
 
     print(f"Running agent {args.agent_cls} (model: {args.model_name}) ")
     llm = LLM(args.model_name)
-    AgentCls: Type[Agent] = Agent.get_cls(args.agent_cls)
-    agent = AgentCls(llm=llm)
+    # AgentCls: Type[Agent] = Agent.get_cls(args.agent_cls)
+    # agent = AgentCls(llm=llm)
     # controller = AgentController(
     #     agent=agent, workdir=args.directory, max_iterations=args.max_iterations
     # )
-    plan = Plan(
-        "Write a function that takes a list of numbers and returns the sum of all the numbers in the list."
-    )
-    state = State(plan)
-    agent.step(state)
+    # plan = Plan(
+    #     "Write a function that takes a list of numbers and returns the sum of all the numbers in the list."
+    # )
+    # state = State(plan)
+    # agent.step(state)
 
     # await controller.start_loop(task)
+
+    # get latest task from linear
+    linear = Linear()
+    task = linear.get_my_todo_issues(first=1)
+    print(task)
 
 
 if __name__ == "__main__":

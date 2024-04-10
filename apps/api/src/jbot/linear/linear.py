@@ -3,6 +3,8 @@ from typing import Optional, Union
 from jbot import config
 import requests
 
+from src.jbot.linear.schema.response import GetMyTodoIssuesResponse
+
 
 class Linear:
     def __init__(self, url: str = "https://api.linear.app/graphql"):
@@ -84,7 +86,8 @@ class Linear:
             "filter": {"state": {"type": {"eq": "unstarted"}}},
         }
         data = self._query(query, variables)
-        return data
+        parsed_data = GetMyTodoIssuesResponse.parse_obj(data)
+        return parsed_data.data.user.assignedIssues.nodes
 
     def get_teams(self):
         # TODO: Type the return value
