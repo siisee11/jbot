@@ -1,10 +1,10 @@
-import json
 from jbot import config
 
 from github import Github
 
 # Authentication is defined via github.Auth
 from github import Auth
+from jbot.github.schemas.search_code import SearchCodeResultSchema
 
 
 class MyGithub:
@@ -21,10 +21,26 @@ class MyGithub:
         auth = Auth.Token(pat)
         self.github = Github(auth=auth)
         self.repo = self.github.get_repo(config.get("GITHUB_REPO"))
-        print(self.repo.name)
 
-    def search_code(self, query: str):
+    def search_code(self, query: str) -> SearchCodeResultSchema | None:
         github_search_query = f"{query} repo:{config.get('GITHUB_REPO')}"
-        search_result = self.github.search_code(github_search_query).get_page(0)
-        print(search_result[0].path, search_result[0].decoded_content)
-        return search_result[0].decoded_content
+        search_result = self.github.search_code(
+            github_search_query, highlight=True
+        ).get_page(0)
+
+        if not search_result:
+            return None
+
+        first_search_result = search_result[0]
+        print(first_search_result.git_url)
+        print(first_search_result.download_url)
+        print(first_search_result.text_matches)
+        print(first_search_result.name)
+
+        search_result_dict = {
+            "file_path": first_search_result.path,
+            "content": first_search_result.decoded_content.decode("utf-8"),
+            "fragment": first_search_result.text_matches[0]["fragment"],
+        }
+
+        return SearchCodeResultSchema.model_validate(search_result_dict)

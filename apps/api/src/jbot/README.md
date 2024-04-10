@@ -1,3 +1,5 @@
 `poetry shell`
 
-`python src/jbot/main.py`
+### Run
+
+`python -m jbot.main`

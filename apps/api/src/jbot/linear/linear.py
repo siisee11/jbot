@@ -3,7 +3,7 @@ from typing import Optional, Union
 from jbot import config
 import requests
 
-from src.jbot.linear.schema.response import GetMyTodoIssuesResponse
+from jbot.linear.schema.response import GetMyTodoIssuesResponse
 
 
 class Linear:
@@ -86,7 +86,7 @@ class Linear:
             "filter": {"state": {"type": {"eq": "unstarted"}}},
         }
         data = self._query(query, variables)
-        parsed_data = GetMyTodoIssuesResponse.parse_obj(data)
+        parsed_data = GetMyTodoIssuesResponse.model_validate(data)
         return parsed_data.data.user.assignedIssues.nodes
 
     def get_teams(self):
@@ -116,6 +116,27 @@ class Linear:
                 "title": title,
                 "description": description,
                 "teamId": self.team["id"],
+            }
+        }
+
+        data = self._query(query, variables)
+        return data
+
+    def create_comment_to_issue(self, issue_id: str, body: str):
+        query = """
+        mutation Mutation($input: CommentCreateInput!) {
+            commentCreate(input: $input) {
+                comment {
+                    body
+                }
+                success
+            }
+        }
+        """
+        variables = {
+            "input": {
+                "issueId": issue_id,
+                "body": body,
             }
         }
 
