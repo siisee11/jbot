@@ -42,7 +42,8 @@ def parse_arguments():
         "--agent-cls",
         default="MonologueAgent",
         type=str,
-        help="The agent class to use",
+        choices=["MonologueAgent", "CodeActAgent", "PlannerAgent"],
+        help="The agent class to use (default: MonologueAgent)",
     )
     parser.add_argument(
         "-m",
