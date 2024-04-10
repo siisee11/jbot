@@ -1,0 +1,40 @@
+{
+  "folders": [
+    {
+      "name": "root",
+      "path": "../",
+    },
+    {
+      "name": "api",
+      "path": "../apps/api",
+    },
+    {
+      "name": "web",
+      "path": "../apps/web",
+    },
+    {
+      "name": "freegpt",
+      "path": "../apps/freegpt",
+    },
+    {
+      "name": "docs",
+      "path": "../apps/docs",
+    },
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/.git": true,
+      "**/.svn": true,
+      "**/.hg": true,
+      "**/CVS": true,
+      "**/.DS_Store": true,
+      "**/Thumbs.db": true,
+      "**/node_modules": true,
+      "apps/api": false,
+      "apps/web": false,
+      "apps/docs": false,
+      "apps/freegpt": false,
+    },
+    "workbench.editor.enablePreview": false,
+  },
+}
