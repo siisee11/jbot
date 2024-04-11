@@ -26,6 +26,7 @@ playwright = "*"
 pygithub = "^2.3.0"
 pydantic = "^2.6.4"
 gitpython = "^3.1.43"
+llama-index-vector-stores-weaviate = "^0.1.4"
 
 [tool.poetry.dev-dependencies]
 isort = "^5.10.1"
