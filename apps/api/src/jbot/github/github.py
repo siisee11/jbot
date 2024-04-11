@@ -1,3 +1,5 @@
+import os
+import git
 from jbot import config
 
 from github import Github
@@ -21,6 +23,16 @@ class MyGithub:
         auth = Auth.Token(pat)
         self.github = Github(auth=auth)
         self.repo = self.github.get_repo(config.get("GITHUB_REPO"))
+        self.git_link = f"https://github.com/{config.get_or_error("GITHUB_REPO")}"  # wordbricks/getgpt
+        self.clone_path = config.get_or_error("GITHUB_REPO")
+
+    def clone_repo(self):
+        """
+        Clone the repository to the specified path.
+        Now only support public repository.
+        """
+        if not os.path.exists(self.clone_path):
+            git.Repo.clone_from(self.git_link, self.clone_path)
 
     def search_code(self, query: str) -> SearchCodeResultSchema | None:
         github_search_query = f"{query} repo:{config.get('GITHUB_REPO')}"
