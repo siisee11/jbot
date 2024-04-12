@@ -4,6 +4,7 @@ from pathlib import Path
 from jbot.routers.linear import router as linear_router
 from jbot.routers.github import router as github_router
 from jbot.routers.llm import router as llm_router
+from jbot.routers.vectorstore import router as vectorstore_router
 from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -22,6 +23,7 @@ app.add_middleware(
 app.include_router(linear_router)
 app.include_router(github_router)
 app.include_router(llm_router)
+app.include_router(vectorstore_router)
 
 
 @app.get("/refresh-files")

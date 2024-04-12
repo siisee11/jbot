@@ -21,9 +21,10 @@ class MyGithub:
         #     int(installation_id)
         # )
         auth = Auth.Token(pat)
+        github_repo = config.get_or_error("GITHUB_REPO")
         self.github = Github(auth=auth)
         self.repo = self.github.get_repo(config.get("GITHUB_REPO"))
-        self.git_link = f"https://github.com/{config.get_or_error("GITHUB_REPO")}"  # wordbricks/getgpt
+        self.git_link = f"https://github.com/{github_repo}"
         self.clone_path = config.get_or_error("GITHUB_REPO")
 
     def clone_repo(self):
