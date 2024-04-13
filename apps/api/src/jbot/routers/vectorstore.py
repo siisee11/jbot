@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+from jbot.vectorstore.supabase import MySupabaseVectorStore
 from jbot.vectorstore.weaviate import MyWeaviateVectorStore
 from opendevin.agent import Agent
 from jbot import config
@@ -9,6 +10,7 @@ router = APIRouter(
 )
 
 weaviate = MyWeaviateVectorStore()
+supabase = MySupabaseVectorStore()
 
 
 @router.post("/weaviate/query")
@@ -17,6 +19,14 @@ async def query(query: str):
     Query to Weaviate vector store.
     """
     return weaviate.query(query)
+
+
+@router.post("/supabase/query")
+async def query(query: str):
+    """
+    Query to Supabase vector store.
+    """
+    return supabase.query(query)
 
 
 @router.get("/agents")

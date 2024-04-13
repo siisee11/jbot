@@ -26,6 +26,8 @@ DEFAULT_CONFIG = {
     "DIRECTORY_REWRITE": "",
     "PROMPT_DEBUG_DIR": "",
     "MAX_ITERATIONS": 100,
+    "SUPABASE_DATABASE_URL": None,
+    "SUPABASE_DATABASE_PASSWORD": None,
 }
 
 config_str = ""
