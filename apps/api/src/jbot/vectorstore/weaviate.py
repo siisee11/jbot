@@ -15,8 +15,9 @@ class MyWeaviateVectorStore:
         )
 
         documents = SimpleDirectoryReader("./data/paul_graham/").load_data()
-
-        vector_store = WeaviateVectorStore(weaviate_client=self.client)
+        vector_store = WeaviateVectorStore(
+            weaviate_client=self.client, index_name="LlamaIndex"
+        )
         storage_context = StorageContext.from_defaults(vector_store=vector_store)
         self.index = VectorStoreIndex.from_documents(
             documents, storage_context=storage_context
