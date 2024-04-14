@@ -71,4 +71,4 @@ class Embedder:
 
     def retrieve_results(self, query):
         result = self.vectorstore.query(query)
-        return result["answer"]
+        return result["response"]
