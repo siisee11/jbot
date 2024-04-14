@@ -1,5 +1,7 @@
 from jbot.rag.core.index_builder.repo_index_builder import load_repo_index
 
+from jbot.rag.embedder import Embedder
+from jbot.vectorstore.weaviate import MyWeaviateVectorStore
 from llama_index.llms.openai import OpenAI
 from llama_index.embeddings.openai import OpenAIEmbedding, OpenAIEmbeddingModelType
 from llama_index.core import Settings
@@ -18,7 +20,6 @@ Settings.embed_model = OpenAIEmbedding(
     model=OpenAIEmbeddingModelType.TEXT_EMBED_3_SMALL,
 )
 
-repo_index = load_repo_index()
-query_engine = repo_index.as_query_engine()
-response = query_engine.query("Who is the author?")
+embedder = Embedder(vectorstore=MyWeaviateVectorStore(index_name="RepoIndex"))
+response = embedder.retrieve_results("How to run GetGPT?")
 print(response)
