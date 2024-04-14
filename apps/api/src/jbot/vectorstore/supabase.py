@@ -12,14 +12,14 @@ class MySupabaseVectorStore:
         connection_string = config.get_or_error("SUPABASE_DATABASE_URL")
         print(connection_string)
 
-        vector_store = SupabaseVectorStore(
-            postgres_connection_string=connection_string,
-            collection_name="base_demo",
-        )
-        storage_context = StorageContext.from_defaults(vector_store=vector_store)
-        self.index = VectorStoreIndex.from_documents(
-            documents, storage_context=storage_context
-        )
+        # vector_store = SupabaseVectorStore(
+        #     postgres_connection_string=connection_string,
+        #     collection_name="base_demo",
+        # )
+        # storage_context = StorageContext.from_defaults(vector_store=vector_store)
+        # self.index = VectorStoreIndex.from_documents(
+        #     documents, storage_context=storage_context
+        # )
 
     def query(self, query: str):
         query_engine = self.index.as_query_engine(similarity_top_k=2)

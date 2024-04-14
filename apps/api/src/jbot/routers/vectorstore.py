@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+from jbot.rag.embedder import Embedder
 from jbot.vectorstore.supabase import MySupabaseVectorStore
 from jbot.vectorstore.weaviate import MyWeaviateVectorStore
 from opendevin.agent import Agent
@@ -13,12 +14,16 @@ weaviate = MyWeaviateVectorStore()
 supabase = MySupabaseVectorStore()
 
 
+embedder = Embedder(vectorstore=MyWeaviateVectorStore(index_name="RepoIndex"))
+
+
 @router.post("/weaviate/query")
 async def query(query: str):
     """
     Query to Weaviate vector store.
     """
-    return weaviate.query(query)
+    # return weaviate.query(query)
+    return embedder.retrieve_results(query)
 
 
 @router.post("/supabase/query")
