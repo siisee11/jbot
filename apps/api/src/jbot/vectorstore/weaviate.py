@@ -28,6 +28,11 @@ class MyWeaviateVectorStore:
                 documents, storage_context=storage_context
             )
 
+        vector_store = WeaviateVectorStore(
+            weaviate_client=self.client, index_name=self.index_name
+        )
+        self.index = VectorStoreIndex.from_vector_store(vector_store)
+
     def load(self):
         if self.index is None:
             raise ValueError("Index not found")
@@ -41,9 +46,6 @@ class MyWeaviateVectorStore:
         self.index = VectorStoreIndex.from_documents(
             documents, storage_context=storage_context
         )
-
-    def load(self):
-        return self.index
 
     def query(self, query: str):
         if self.index is None:

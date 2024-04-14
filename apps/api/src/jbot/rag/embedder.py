@@ -9,18 +9,10 @@ EMBED_TARGET_EXTENSIONS = [".py", ".ts", ".tsx", ".md"]
 
 
 class Embedder:
-    index = None
-
     def __init__(self, vectorstore: MyWeaviateVectorStore) -> None:
         self.root_dir = "data/getgpt"
         self.github = MyGithub()
         self.vectorstore = vectorstore
-
-        self.index = self.load_vectorstore_index()
-
-        if self.index is None:
-            self.extract_all_files()
-            self.embed()
 
     def extract_all_files(self):
         self.docs: list[Document] = []
@@ -66,9 +58,6 @@ class Embedder:
                     os.rmdir(dir_path)
             os.rmdir(path)
 
-    def load_vectorstore_index(self):
-        return self.vectorstore.load()
-
     def retrieve_results(self, query):
         result = self.vectorstore.query(query)
-        return result["response"]
+        return result
