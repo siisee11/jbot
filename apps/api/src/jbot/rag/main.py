@@ -21,5 +21,6 @@ Settings.embed_model = OpenAIEmbedding(
 )
 
 embedder = Embedder(vectorstore=MyWeaviateVectorStore(index_name="RepoIndex"))
+# embedder.embed() at first run
 response = embedder.retrieve_results("How to run GetGPT?")
 print(response)

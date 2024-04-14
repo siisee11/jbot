@@ -14,7 +14,7 @@ class Embedder:
         self.github = MyGithub()
         self.vectorstore = vectorstore
 
-    def extract_all_files(self):
+    def _extract_all_files(self):
         self.docs: list[Document] = []
         for dirpath, dirnames, filenames in os.walk(self.root_dir):
             for filename in filenames:
@@ -44,7 +44,7 @@ class Embedder:
         print("# of docs loaded", len(self.docs))
 
     def embed(self):
-        print("embed: docs[0]", self.docs[0])
+        self._extract_all_files()
         self.vectorstore.add_documents(self.docs)
 
     def _delete_directory(self, path):
