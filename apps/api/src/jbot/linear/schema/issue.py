@@ -1,4 +1,4 @@
-from typing import ClassVar, List, Optional, Sequence
+from typing import List, Optional, Sequence
 
 from pydantic import BaseModel
 
@@ -19,7 +19,7 @@ class State(BaseModel):
 class Issue(BaseModel):
     id: str
     title: str
-    description: str
+    description: str | None
     identifier: str
     labels: Label
     state: State

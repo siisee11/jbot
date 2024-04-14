@@ -36,7 +36,8 @@ class MyGithub:
             git.Repo.clone_from(self.git_link, self.clone_path)
 
     def search_code(self, query: str) -> SearchCodeResultSchema | None:
-        github_search_query = f"{query} repo:{config.get('GITHUB_REPO')}"
+        github_search_query = f"repo:{config.get('GITHUB_REPO')} {query} "
+        print("github search query:", github_search_query)
         search_result = self.github.search_code(
             github_search_query, highlight=True
         ).get_page(0)

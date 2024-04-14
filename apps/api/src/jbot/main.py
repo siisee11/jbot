@@ -145,14 +145,26 @@ SEARCH_TERMS:
     print(search_terms)
 
     github = MyGithub()
-    search_result = github.search_code(query=search_terms[0])
-    print(search_result)
-    pl = get_language_from_filename(search_result.file_path)
-    code_segment = search_result.fragment
+    search_term_split = search_terms[0].split()
+    for term in search_term_split:
+        search_result = github.search_code(query=term)
+        print(search_result)
 
-    comment = f"""이 이슈와 관련있는 파일: `{search_result.file_path}` \n\n\n ```{pl}\n{code_segment}
-```"""
-    linear.create_comment_to_issue(task[0].id, comment)
+        if search_result is None:
+            continue
+
+        pl = get_language_from_filename(search_result.file_path)
+        code_segment = search_result.fragment
+
+        comment = f"""이 이슈와 관련있는 파일: `{search_result.file_path}` \n\n\n ```{pl}\n{code_segment}
+```
+
+(commented by jbot)"""
+        linear.create_comment_to_issue(task[0].id, comment)
+
+        break
+
+    print("Done!")
 
 
 if __name__ == "__main__":
