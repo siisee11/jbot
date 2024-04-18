@@ -11,19 +11,22 @@ class OpenAIAssistant:
     assistant: Assistant
     thread: Thread = None
 
-    def __init__(self, vector_store_id: str = None):
+    def __init__(self, assistant_id: str = None, vector_store_id: str = None):
         self.client = OpenAI(api_key=config.get_or_error("OPENAI_API_KEY"))
-        self.assistant = self.client.beta.assistants.create(
-            name="Code Search Assistant",
-            instructions="You are an expert programmer and you have access to code base. Use you knowledge base to search relevant code.",
-            model="gpt-4-turbo",
-            tools=[{"type": "file_search"}],
-            tool_resources=(
-                ({"file_search": {"vector_store_ids": [vector_store_id]}})
-                if vector_store_id
-                else NOT_GIVEN
-            ),
-        )
+        if assistant_id:
+            self.assistant = self.client.beta.assistants.retrieve(assistant_id)
+        else:
+            self.assistant = self.client.beta.assistants.create(
+                name="Code Search Assistant",
+                instructions="You are an expert programmer and you have access to code base. Use you knowledge base to search relevant code.",
+                model="gpt-4-turbo",
+                tools=[{"type": "file_search"}],
+                tool_resources=(
+                    ({"file_search": {"vector_store_ids": [vector_store_id]}})
+                    if vector_store_id
+                    else NOT_GIVEN
+                ),
+            )
         print(self.client.beta.vector_stores.list())
 
     def create_vector_store(self, name: str, file_root_dir: str = "data/getgpt"):
