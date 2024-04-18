@@ -34,35 +34,38 @@ class OpenAIAssistant:
 
         file_paths = []
         for dirpath, dirnames, filenames in os.walk(file_root_dir):
+            print("-------------", dirpath, "---------------")
             for filename in filenames:
                 file_extension = os.path.splitext(filename)[1][1:]
                 if file_extension in VECTOR_STORE_TARGET_FILE_EXTENSION:
                     file_paths.append(os.path.join(dirpath, filename))
-                    if len(file_paths) > 100:
-                        break
-            if len(file_paths) > 100:
-                break
 
-        # Ready the files for upload to OpenAI
-        file_streams = [open(path, "rb") for path in file_paths]
+            if len(file_paths) < 100:
+                continue
+            self.upload_files(file_paths=file_paths, vector_store_id=vector_store.id)
+            file_paths = []
 
-        # Use the upload and poll SDK helper to upload the files, add them to the vector store,
-        # and poll the status of the file batch for completion.
-        file_batch = self.client.beta.vector_stores.file_batches.upload_and_poll(
-            vector_store_id=vector_store.id, files=file_streams
-        )
-
-        for stream in file_streams:
-            stream.close()
-
-        # You can print the status and the file counts of the batch to see the result of this operation.
-        print(file_batch.status)
-        print(file_batch.file_counts)
+        self.upload_files(file_paths=file_paths, vector_store_id=vector_store.id)
 
         self.assistant = self.client.beta.assistants.update(
             assistant_id=self.assistant.id,
             tool_resources={"file_search": {"vector_store_ids": [vector_store.id]}},
         )
+
+    def upload_files(self, file_paths: list[str], vector_store_id: str):
+        file_streams = [open(path, "rb") for path in file_paths]
+        try:
+            file_batch = self.client.beta.vector_stores.file_batches.upload_and_poll(
+                vector_store_id=vector_store_id, files=file_streams
+            )
+            # You can print the status and the file counts of the batch to see the result of this operation.
+            print("status", file_batch.status, "# of files:", file_batch.file_counts)
+            print("------------------------------------")
+        except Exception as e:
+            print(e)
+        finally:
+            for stream in file_streams:
+                stream.close()
 
     def create_new_thread(self, message: str):
         self.thread = self.client.beta.threads.create(
