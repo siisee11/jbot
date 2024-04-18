@@ -1,5 +1,4 @@
 import os
-from jbot.github.github import MyGithub
 from jbot.vectorstore.weaviate import MyWeaviateVectorStore
 from llama_index.core.schema import TextNode
 from llama_index.core import Document
@@ -11,10 +10,9 @@ EMBED_TARGET_EXTENSIONS = [".py", ".ts", ".tsx", ".md"]
 class Embedder:
     def __init__(self, vectorstore: MyWeaviateVectorStore) -> None:
         self.root_dir = "data/getgpt"
-        self.github = MyGithub()
         self.vectorstore = vectorstore
 
-    def _extract_all_files(self):
+    def _create_documents_from_files(self):
         self.docs: list[Document] = []
         for dirpath, dirnames, filenames in os.walk(self.root_dir):
             for filename in filenames:
@@ -44,7 +42,7 @@ class Embedder:
         print("# of docs loaded", len(self.docs))
 
     def embed(self):
-        self._extract_all_files()
+        self._create_documents_from_files()
         self.vectorstore.add_documents(self.docs)
 
     def _delete_directory(self, path):
