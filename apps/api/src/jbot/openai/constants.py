@@ -29,17 +29,8 @@ OPENAI_SUPPORT_FILE_EXTENSION = [
 
 
 VECTOR_STORE_TARGET_FILE_EXTENSION = [
-    "c",
-    "cpp",
-    "css",
-    "csv",
-    "docx",
-    "html",
-    "java",
     "js",
-    "json",
     "md",
-    "pdf",
     "py",
     "ts",
     "txt",

@@ -11,8 +11,13 @@ class OpenAIAssistant:
     assistant: Assistant
     thread: Thread = None
 
-    def __init__(self, assistant_id: str = None, vector_store_id: str = None):
+    def __init__(self):
         self.client = OpenAI(api_key=config.get_or_error("OPENAI_API_KEY"))
+        print(self.client.beta.vector_stores.list())
+
+    def create_or_load_assistant(
+        self, assistant_id: str = None, vector_store_id: str = None
+    ):
         if assistant_id:
             self.assistant = self.client.beta.assistants.retrieve(assistant_id)
         else:
@@ -27,7 +32,10 @@ class OpenAIAssistant:
                     else NOT_GIVEN
                 ),
             )
-        print(self.client.beta.vector_stores.list())
+            print("assistant created", self.assistant.id)
+
+    def list_assistants(self):
+        return list(self.client.beta.assistants.list())
 
     def create_vector_store(self, name: str, file_root_dir: str = "data/getgpt"):
         vector_store = self.client.beta.vector_stores.create(name=name)
