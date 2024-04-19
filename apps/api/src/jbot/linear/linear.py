@@ -1,9 +1,9 @@
 import json
 from typing import Optional, Union
-from jbot import config
 import requests
 
-from jbot.linear.schema.response import GetMyTodoIssuesResponse
+from src.jbot import config
+from src.jbot.linear.schema.response import GetMyTodoIssuesResponse
 
 
 class Linear:

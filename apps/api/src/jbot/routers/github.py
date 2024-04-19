@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from jbot.github.github import MyGithub
+from src.jbot.github.github import MyGithub
 
 
 router = APIRouter(

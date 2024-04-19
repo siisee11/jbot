@@ -156,7 +156,7 @@ clean:
 	rm -rf .pytest_cache htmlcov .coverage requirements.txt
 
 run:
-	poetry run uvicorn jbot.bot.listen:app --host 0.0.0.0 --port 9000 --reload
+	poetry run uvicorn src.jbot.bot.listen:app --host 0.0.0.0 --port 9000 --reload
 
 run-bg:
 	poetry run nohup uvicorn jbot.bot.listen:app --port 9000 > logs/backend_$(shell date +'%Y%m%d\_%H%M%S').log 2>&1 &

@@ -1,12 +1,12 @@
 import os
 import git
-from jbot import config
+from src.jbot import config
 
 from github import Github
 
 # Authentication is defined via github.Auth
 from github import Auth
-from jbot.github.schemas.search_code import SearchCodeResultSchema
+from src.jbot.github.schemas.search_code import SearchCodeResultSchema
 
 
 class MyGithub:

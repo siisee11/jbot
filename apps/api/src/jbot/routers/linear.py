@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from jbot.linear.linear import Linear
+from src.jbot.linear.linear import Linear
 
 
 router = APIRouter(

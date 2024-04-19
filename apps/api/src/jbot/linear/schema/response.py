@@ -1,7 +1,7 @@
 from typing import List
 from pydantic import BaseModel
 
-from jbot.linear.schema.issue import Issue
+from src.jbot.linear.schema.issue import Issue
 
 
 class AssignedIssues(BaseModel):
