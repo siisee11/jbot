@@ -2,9 +2,8 @@
   "version": 2,
   "builds": [
     {
-      "src": "/src/jbot/bot/listen.py",
-      "use": "@vercel/python",
-      "config": { "runtime": "python3.9" }
+      "src": "src/jbot/bot/listen.py",
+      "use": "@vercel/python"
     }
   ],
   "routes": [

@@ -16,6 +16,8 @@
 
 `du -h -d 1 .venv/lib/python3.11/site-packages | sort -h` to check package size
 
+2. Set Node runtime to 18.0 on Vercel
+
 ### VS code interpreter setting
 
 cmd + p > interpreter
