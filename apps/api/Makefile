@@ -162,7 +162,7 @@ run-bg:
 	poetry run nohup uvicorn jbot.bot.listen:app --port 9000 > logs/backend_$(shell date +'%Y%m%d\_%H%M%S').log 2>&1 &
 
 requirements:
-	poetry export --without-hashes --format=requirements.txt > requirements.txt
+	poetry export --without-hashes --without-urls | awk '{ print $1 }' FS=';' > requirements.txt
 
 deploy: clean requirements
 ifndef PROD
