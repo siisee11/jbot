@@ -89,19 +89,19 @@ start-frontend:
 	@cd frontend && BACKEND_HOST=$(BACKEND_HOST) FRONTEND_PORT=$(FRONTEND_PORT) pnpm run start
 
 # Run the app
-run:
-	@echo "$(GREEN)Running the app...$(RESET)"
-	@if [ "$(OS)" = "Windows_NT" ]; then \
-		echo "$(RED)`make run` is not supported on Windows. Please run `make start-frontend` and `make start-backend` separately.$(RESET)"; \
-		exit 1; \
-	fi
-	@mkdir -p logs
-	@poetry run nohup uvicorn opendevin.server.listen:app --port $(BACKEND_PORT) > logs/backend_$(shell date +'%Y%m%d_%H%M%S').log 2>&1 &
-	@echo "$(YELLOW)Waiting for the backend to start...$(RESET)"
-	@until nc -z localhost $(BACKEND_PORT); do sleep 0.1; done
-	@echo "$(GREEN)Backend started successfully.$(RESET)"
-	@cd frontend && echo "$(BLUE)Starting frontend with pnpm...$(RESET)" && pnpm run start -- --port $(FRONTEND_PORT)
-	@echo "$(GREEN)Application started successfully.$(RESET)"
+# run:
+# 	@echo "$(GREEN)Running the app...$(RESET)"
+# 	@if [ "$(OS)" = "Windows_NT" ]; then \
+# 		echo "$(RED)`make run` is not supported on Windows. Please run `make start-frontend` and `make start-backend` separately.$(RESET)"; \
+# 		exit 1; \
+# 	fi
+# 	@mkdir -p logs
+# 	@poetry run nohup uvicorn opendevin.server.listen:app --port $(BACKEND_PORT) > logs/backend_$(shell date +'%Y%m%d_%H%M%S').log 2>&1 &
+# 	@echo "$(YELLOW)Waiting for the backend to start...$(RESET)"
+# 	@until nc -z localhost $(BACKEND_PORT); do sleep 0.1; done
+# 	@echo "$(GREEN)Backend started successfully.$(RESET)"
+# 	@cd frontend && echo "$(BLUE)Starting frontend with pnpm...$(RESET)" && pnpm run start -- --port $(FRONTEND_PORT)
+# 	@echo "$(GREEN)Application started successfully.$(RESET)"
 
 # Setup config.toml
 setup-config:
@@ -152,5 +152,29 @@ help:
 	@echo "                        LLM Model name, and workspace directory."
 	@echo "  $(GREEN)help$(RESET)                - Display this help message, providing information on available targets."
 
+clean:
+	rm -rf .pytest_cache htmlcov .coverage requirements.txt
+
+run:
+	poetry run uvicorn jbot.bot.listen:app --host 0.0.0.0 --port 9000 --reload
+
+run-bg:
+	poetry run nohup uvicorn jbot.bot.listen:app --port 9000 > logs/backend_$(shell date +'%Y%m%d\_%H%M%S').log 2>&1 &
+
+requirements:
+	poetry export --without-hashes --format=requirements.txt > requirements.txt
+
+deploy: clean requirements
+ifndef PROD
+	vercel
+else
+	vercel --prod
+endif
+
+fmt:
+	poetry run autoflake --ignore-init-module-imports --remove-all-unused-imports --verbose --remove-unused-variables -r -i app/* tests/*
+	poetry run isort .
+	poetry run black .
+
 # Phony targets
-.PHONY: build build-eval start-backend start-frontend run setup-config help
+.PHONY: build build-eval start-backend start-frontend run setup-config help clean fmt deploy requirements 

@@ -8,26 +8,15 @@ authors = ["jay <siisee111@gmail.com>"]
 python = "3.11.6"
 fastapi = "^0.109.2"
 uvicorn = "^0.27.1"
-email-validator = "^2.1.0"
-pydantic-settings = "^2.2.1"
 python-dotenv = "^1.0.1"
-datasets = "*"
-pandas = "*"
-litellm = "*"
-google-generativeai = "*"    # To use litellm with Gemini Pro API
+# litellm = "*"
 termcolor = "*"
-seaborn = "*"
-docker = "*"
 toml = "*"
 types-toml = "*"
-numpy = "*"
 json-repair = "*"
-playwright = "*"
 pygithub = "^2.3.0"
 pydantic = "^2.6.4"
 gitpython = "^3.1.43"
-llama-index-vector-stores-weaviate = "^0.1.4"
-llama-index-vector-stores-supabase = "^0.1.3"
 openai = "^1.21.2"
 
 [tool.poetry.dev-dependencies]
@@ -36,29 +25,13 @@ black = "^22.6.0"
 pytest = "^8.0.1"
 pylint-pydantic = "^0.3.2"
 
-[tool.poetry.group.llama-index.dependencies]
-llama-index = "^0.10.27"
-llama-index-readers-github = "^0.1.7"
-llama-index-embeddings-openai = "^0.1.7"
-arize-phoenix = "^3.19.4"
-llama-index-callbacks-arize-phoenix = "^0.1.4"
-llama-index-vector-stores-chroma = "*"
-chromadb = "*"
-llama-index-embeddings-huggingface = "*"
-llama-index-embeddings-azure-openai = "*"
-llama-index-embeddings-ollama = "*"
-pymupdfb = "*"
-
-[tool.poetry.group.dev.dependencies]
-ruff = "*"
-mypy = "*"
-pre-commit = "*"
-
-[tool.poetry.group.test.dependencies]
-pytest = "*"
-
-[tool.poetry.group.evaluation.dependencies]
-torch = "*"
+# [tool.poetry.group.llama-index.dependencies]
+# llama-index = "^0.10.27"
+# llama-index-vector-stores-weaviate = "^0.1.4"
+# llama-index-vector-stores-supabase = "^0.1.3"
+# llama-index-embeddings-openai = "^0.1.7"
+# arize-phoenix = "^3.19.4"
+# llama-index-callbacks-arize-phoenix = "^0.1.4"
 
 [build-system]
 requires = ["poetry-core"]

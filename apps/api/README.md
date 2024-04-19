@@ -1,10 +1,20 @@
 ## How to run
 
-- refers to Makefile
+- See Makefile
 
 ### run
 
-`$ poetry run nohup uvicorn opendevin.server.listen:app --port $(BACKEND_PORT) > logs/backend_$(shell date +'%Y%m%d\_%H%M%S').log 2>&1 &`
+`$ make run`
+
+## How to deploy slack bot
+
+`$ make deploy`
+
+### Troubleshoot
+
+1. Vercel serverless maximum size is 250MB
+
+`du -h -d 1 .venv/lib/python3.11/site-packages | sort -h` to check package size
 
 ### VS code interpreter setting
 

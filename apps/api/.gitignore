@@ -33,3 +33,6 @@ archive.zip
 config.toml
 
 indexes
+.vercel
+
+requirements.txt
