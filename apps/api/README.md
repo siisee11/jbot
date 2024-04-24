@@ -10,6 +10,10 @@
 
 `$ make deploy`
 
+## How to run slack bot
+
+`$ make run-bot`
+
 ### Troubleshoot
 
 1. Vercel serverless maximum size is 250MB
