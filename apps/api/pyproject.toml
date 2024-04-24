@@ -18,6 +18,7 @@ pygithub = "^2.3.0"
 pydantic = "^2.6.4"
 gitpython = "^3.1.43"
 openai = "^1.21.2"
+slack-bolt = "^1.18.1"
 
 [tool.poetry.dev-dependencies]
 isort = "^5.10.1"

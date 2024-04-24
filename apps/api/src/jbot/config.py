@@ -28,6 +28,8 @@ DEFAULT_CONFIG = {
     "MAX_ITERATIONS": 100,
     "SUPABASE_DATABASE_URL": None,
     "SUPABASE_DATABASE_PASSWORD": None,
+    "SLACK_BOT_TOKEN": None,
+    "SLACK_SIGNING_SECRET": None,
 }
 
 config_str = ""
