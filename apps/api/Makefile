@@ -156,7 +156,7 @@ clean:
 	rm -rf .pytest_cache htmlcov .coverage requirements.txt
 
 run-bot:
-	npx -y nodemon --exec python -m src.jbot.bot.app
+	npx -y nodemon --exec python -m src.jbot.bot.app --ext py
 
 run:
 	poetry run uvicorn src.jbot.bot.listen:app --host 0.0.0.0 --port 9000 --reload

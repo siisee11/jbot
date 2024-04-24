@@ -1,9 +1,9 @@
 import os
-from jbot.openai.constants import VECTOR_STORE_TARGET_FILE_EXTENSION
+from src.jbot.openai.constants import VECTOR_STORE_TARGET_FILE_EXTENSION
 from openai import NOT_GIVEN, OpenAI
 from openai.types.beta import Assistant, Thread
 
-from jbot import config
+from src.jbot import config
 
 
 class OpenAIAssistant:
@@ -92,7 +92,7 @@ class OpenAIAssistant:
             self.client.beta.threads.messages.create(
                 thread_id=self.thread.id, role="user", content=message
             )
-        self.run_thread()
+        return self.run_thread()
 
     def run_thread(self):
         run = self.client.beta.threads.runs.create_and_poll(
@@ -118,3 +118,4 @@ class OpenAIAssistant:
 
         print(message_content.value)
         print("\n".join(citations))
+        return message_content.value, citations
