@@ -22,7 +22,6 @@ def repeat_text(ack, respond, command):
     print(command)
 
     message, citations = my_assistant.chat(command["text"])
-    time.sleep(4)
 
     blocks = [
         {
