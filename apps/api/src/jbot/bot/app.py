@@ -24,52 +24,34 @@ def repeat_text(ack, respond, command):
     message, citations = my_assistant.chat(command["text"])
     time.sleep(4)
 
-    respond({"response_type": "ephemeral", "text": message})
+    blocks = [
+        {
+            "type": "section",
+            "text": {"type": "mrkdwn", "text": command["text"]},
+        },
+        {"type": "divider"},
+        {
+            "type": "section",
+            "text": {"type": "mrkdwn", "text": message},
+        },
+    ]
 
-
-@app.event("app_home_opened")
-def update_home_tab(client, event, logger):
-    try:
-        # views.publish is the method that your app uses to push a view to the Home tab
-        client.views_publish(
-            # the user that opened your app's app home
-            user_id=event["user"],
-            # the view object that appears in the app home
-            view={
-                "type": "home",
-                "callback_id": "home_view",
-                # body of the view
-                "blocks": [
-                    {
-                        "type": "section",
-                        "text": {
-                            "type": "mrkdwn",
-                            "text": "*Welcome to your _App's Home tab_* :tada:",
-                        },
-                    },
-                    {"type": "divider"},
-                    {
-                        "type": "section",
-                        "text": {
-                            "type": "mrkdwn",
-                            "text": "This button won't do much for now but you can set up a listener for it using the `actions()` method and passing its unique `action_id`. See an example in the `examples` folder within your Bolt app.",
-                        },
-                    },
-                    {
-                        "type": "actions",
-                        "elements": [
-                            {
-                                "type": "button",
-                                "text": {"type": "plain_text", "text": "Click me!"},
-                            }
-                        ],
-                    },
-                ],
-            },
+    if len(citations) > 0:
+        blocks.append(
+            {
+                "type": "context",
+                "elements": [{"type": "plain_text", "text": c} for c in citations],
+            }
         )
 
-    except Exception as e:
-        logger.error(f"Error publishing home tab: {e}")
+    print(command["channel_name"] == "directmessage")
+    response_type = (
+        "in_channel" if command["channel_name"] == "directmessage" else "ephemeral"
+    )
+    respond(
+        blocks=blocks,
+        response_type=response_type,
+    )
 
 
 # Ready? Start your app!
