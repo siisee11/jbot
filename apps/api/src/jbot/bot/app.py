@@ -1,4 +1,3 @@
-import time
 from slack_bolt import App
 
 from src.jbot import config
